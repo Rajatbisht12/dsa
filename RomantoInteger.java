@@ -1,20 +1,29 @@
+import java.util.HashMap;
+import java.util.Map;
 public class RomantoInteger {
-    public static void main(String[] args) {
-        int [] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String [] romNum = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+    public int romantoInt(String s){
+        Map<Character, Integer> symbolValues = new HashMap<Character,Integer>();
 
-        StringBuilder sb = new StringBuilder();
+        symbolValues.put('I', 1);
+        symbolValues.put('V', 5);
+        symbolValues.put('X', 10);
+        symbolValues.put('L', 50);
+        symbolValues.put('C', 100);
+        symbolValues.put('D', 500);
+        symbolValues.put('M', 1000);
 
-        int num = 1992;
-        int i = 0;
-        while (num > 0) {
-            if(num > values[i]){
-                sb.append(romNum[i]);
-                num -= values[i];
+
+        int n = s.length();
+        int num  = symbolValues.get(s.charAt(n-1));
+
+        for(int i = n-2; i >= 0; i--){
+            if(symbolValues.get(s.charAt(i)) >= symbolValues.get(s.charAt(i+1))){
+                num += symbolValues.get(s.charAt(i));
             }else{
-                i++;
+                num -= symbolValues.get(s.charAt(i));
             }
         }
-        System.out.println(sb.toString());
+        return num;
     }
+    
 }
